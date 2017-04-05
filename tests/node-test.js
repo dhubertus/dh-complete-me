@@ -14,4 +14,15 @@ describe('Class: Node', () => {
     expect(node.children).to.deep.eq({});
   });
 
+  it('should default to not being a word', () => {
+    let node = new Node(0);
+
+    expect(node.isWord).to.eq(false);
+  })
+
+  it('should default to having never been selected', () => {
+    let node = new Node(0);
+
+    expect(node.timesSelected).to.eq(0);
+  })
 })

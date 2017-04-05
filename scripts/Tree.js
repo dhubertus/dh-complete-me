@@ -4,7 +4,6 @@ const text = "/usr/share/dict/words"
 
 require('locus')
 
-
 export default class Tree {
   constructor() {
     this.rootNode = new Node(null)
@@ -36,7 +35,6 @@ export default class Tree {
     let splitArray = text.split('')
 
     splitArray.forEach((letter) => {
-
       if (node.children[letter]) {
         return node = node.children[letter]
       }
@@ -56,13 +54,14 @@ export default class Tree {
     var suggestions = suggested || []
 
     if (node.isWord) {
-      suggestions.push({word:text, timesSelected:node.timesSelected})
+      suggestions.push({word: text, timesSelected: node.timesSelected})
     }
+
     Object.keys(node.children).forEach((key) => {
       this.suggest(text + key, suggestions)
     })
 
-    suggestions.sort(function(a,b) {
+    suggestions.sort((a, b) => {
       return b.timesSelected - a.timesSelected
     })
 
@@ -83,16 +82,13 @@ export default class Tree {
     })
   }
 
+
   select(text, selected) {
-    let suggested = this.suggest(text)
-    // console.log(suggested)
-    let identification = suggested.find((val) => {
+    let identification = this.suggest(text).find((val) => {
       return val === selected
     })
-    // console.log(identification)
-
     let node = this.findNode(identification)
-    node.timesSelected++
 
+    node.timesSelected++
   }
 }
