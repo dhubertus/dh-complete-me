@@ -10,7 +10,7 @@ describe('Class: Tree', () => {
     expect(tree).to.be.instanceof(Tree);
   });
 
-  it('should have a root node of null', () => {
+  it('should have a root node with a value of null', () => {
     let tree = new Tree();
 
     expect(tree.rootNode.data).to.eq(null)
@@ -28,6 +28,7 @@ describe('Class: Tree', () => {
       expect(tree.rootNode.children.a.children.r.data).to.eq('r')
       expect(tree.rootNode.children.a.children.r.children.t.data).to.eq('t')
       expect(tree.rootNode.children.a.children.r.children.t.children.s.data).to.eq('s')
+      expect(tree.rootNode.children.a.children.r.children.t.children.y.data).to.eq('y')
     })
 
     it('should have a function called insert that splits a word', () => {
@@ -57,6 +58,7 @@ describe('Class: Tree', () => {
       let tree = new Tree();
 
       tree.insert('pizza')
+      tree.insert('pizzas')
       tree.insert('pit')
       tree.insert('pickle')
       tree.insert('pices')
@@ -64,7 +66,7 @@ describe('Class: Tree', () => {
 
       let result = tree.suggest('pi')
 
-      expect(result).to.deep.eq(['pizza', 'pit', 'pickle', 'pices', 'pinch'])
+      expect(result).to.deep.eq(['pizza', 'pizzas', 'pit', 'pickle', 'pices', 'pinch'])
     })
   })
 
@@ -87,6 +89,26 @@ describe('Class: Tree', () => {
     })
   })
 
+  describe('Method: select()', () => {
+
+    it('should increment the slected nodes timesSelected prop', () => {
+      let tree = new Tree();
+
+      tree.populate()
+
+      let result = tree.suggest('piz')
+
+      tree.select('piz', 'pizza')
+      tree.select('piz', 'pizza')
+      tree.select('piz', 'pizza')
+      tree.select('piz', 'pizzle')
+      tree.select('piz', 'pizzle')
+      tree.select('piz', 'pizzicato')
+      tree.suggest('piz')
 
 
+
+
+    })
+  })
 })

@@ -53,16 +53,24 @@ export default class Tree {
 
   suggest(text, suggested) {
     let node = this.findNode(text)
-    let suggestions = suggested || []
+    var suggestions = suggested || []
 
     if (node.isWord) {
-      suggestions.push(text)
+      suggestions.push({word:text, timesSelected:node.timesSelected})
     }
-
     Object.keys(node.children).forEach((key) => {
       this.suggest(text + key, suggestions)
     })
-    return suggestions
+
+    suggestions.sort(function(a,b) {
+      return b.timesSelected - a.timesSelected
+    })
+
+    let sortedArray = suggestions.map((obj) => {
+      return obj['word']
+    })
+
+    return sortedArray
   }
 
 
@@ -70,7 +78,21 @@ export default class Tree {
     let dictionary = fs.readFileSync(text).toString().trim().split('\n')
 
     dictionary.forEach((word) => {
-      this.insert(word)
+
+      this.insert(word.toLowerCase(word))
     })
+  }
+
+  select(text, selected) {
+    let suggested = this.suggest(text)
+    // console.log(suggested)
+    let identification = suggested.find((val) => {
+      return val === selected
+    })
+    // console.log(identification)
+
+    let node = this.findNode(identification)
+    node.timesSelected++
+
   }
 }

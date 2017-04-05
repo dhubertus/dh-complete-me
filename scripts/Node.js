@@ -4,6 +4,6 @@ export default class Node {
     this.data = data;
     this.children = {} || null
     this.isWord = false
-    this.address;
+    this.timesSelected = 0
   }
 }
