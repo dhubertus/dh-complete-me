@@ -1,7 +1,9 @@
 import Node from '../scripts/node'
+import fs from 'fs'
 const text = "/usr/share/dict/words"
-var fs = require('fs');
+
 require('locus')
+
 
 export default class Tree {
   constructor() {
@@ -9,27 +11,25 @@ export default class Tree {
     this.count = 0;
   }
 
+
   insert(word) {
     let node = this.rootNode
     let splitArray = word.split('')
-    let address = ''
 
     splitArray.forEach((letter) => {
 
       if (node.children[letter]) {
-        address = address + letter
         return node = node.children[letter]
       }
 
       node.children[letter] = new Node(letter);
       node = node.children[letter];
-      address = address + letter
-      node.address = address
     })
 
     node.isWord = true
     this.count ++;
   }
+
 
   findNode(text) {
     let node = this.rootNode
@@ -42,56 +42,29 @@ export default class Tree {
       }
     })
 
-    if (node.address === text) {
-      return node
-    }
+    return node
   }
 
-  // suggest(text, suggested) {
-  //
-  //
-  //
-  //   let node = this.findNode(text)
-  //   var suggested = suggested || []
-  //
-  //   console.log(suggested)
-  //
-  //   let nextLetter =
-  //   Object.getOwnPropertyNames(node.children).toString()
-  //   console.log(nextLetter)
-  //
-  //   if(node.isWord) {
-  //     suggested.push(text)
-  //   }
-  //
-  //   if(!node.isWord) {
-  //     let newText = text + nextLetter
-  //     // console.log(newText.toString())
-  //     this.suggest(newText, suggested)
-  //   }
-  //   console.log(suggested)
-  //   return suggested
-  // }
 
-  suggest(text) {
+  count() {
+    return this.count
+  }
+
+
+  suggest(text, suggested) {
     let node = this.findNode(text)
-    var suggested = []
-    // eval(locus)
-    const filterKeys = (node) => {
-      // eval(locus)
-      if(node.isWord){
-        suggested.push(node.address)
-      }
+    let suggestions = suggested || []
 
-      Object.keys(node.children).forEach((key) => {
-        filterKeys(node.children[key])
-      })
+    if (node.isWord) {
+      suggestions.push(text)
     }
 
-    filterKeys(node)
-    return suggested
-
+    Object.keys(node.children).forEach((key) => {
+      this.suggest(text + key, suggestions)
+    })
+    return suggestions
   }
+
 
   populate() {
     let dictionary = fs.readFileSync(text).toString().trim().split('\n')
@@ -100,6 +73,4 @@ export default class Tree {
       this.insert(word)
     })
   }
-
-
 }

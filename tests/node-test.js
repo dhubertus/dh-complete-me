@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import Node from '../scripts/node'
 
-describe('Node', () => {
+describe('Class: Node', () => {
   it('should have data', function() {
     let node = new Node(0);
 
@@ -14,10 +14,4 @@ describe('Node', () => {
     expect(node.children).to.deep.eq({});
   });
 
-  xit('should have a default null value for left and right nodes', function() {
-    let node = new Node(0);
-
-    expect(node.left).to.eq(null);
-    expect(node.right).to.eq(null);
-  });
 })

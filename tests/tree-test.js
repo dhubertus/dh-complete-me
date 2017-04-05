@@ -3,7 +3,7 @@ import Tree from '../scripts/Tree'
 import Node from '../scripts/Node'
 require('locus')
 
-describe('Tree', () => {
+describe('Class: Tree', () => {
   it('should be an instance of tree', function() {
     let tree = new Tree();
 
@@ -16,28 +16,30 @@ describe('Tree', () => {
     expect(tree.rootNode.data).to.eq(null)
   })
 
-  it('should have a function called insert that splits a word', () => {
-    let tree = new Tree();
+  describe('Method: insert()', () => {
+    it('should have a function called insert that splits a word', () => {
+      let tree = new Tree();
 
-    tree.insert('art')
-    tree.insert('arts')
-    tree.insert('arty')
+      tree.insert('art')
+      tree.insert('arts')
+      tree.insert('arty')
 
-    expect(tree.rootNode.children.a.data).to.eq('a')
-    expect(tree.rootNode.children.a.children.r.data).to.eq('r')
-    expect(tree.rootNode.children.a.children.r.children.t.data).to.eq('t')
-    expect(tree.rootNode.children.a.children.r.children.t.children.s.data).to.eq('s')
+      expect(tree.rootNode.children.a.data).to.eq('a')
+      expect(tree.rootNode.children.a.children.r.data).to.eq('r')
+      expect(tree.rootNode.children.a.children.r.children.t.data).to.eq('t')
+      expect(tree.rootNode.children.a.children.r.children.t.children.s.data).to.eq('s')
+    })
 
+    it('should have a function called insert that splits a word', () => {
+      let tree = new Tree();
+
+      tree.insert('art')
+      tree.insert('polymer')
+      tree.findNode('polymer')
+    })
   })
-  it('should have a function called insert that splits a word', () => {
-    let tree = new Tree();
 
-    tree.insert('art')
-    tree.insert('polymer')
-    tree.findNode('polymer')
-  })
-
-  describe('Method: findNode', () => {
+  describe('Method: findNode()', () => {
     it('should return the last node of the entry by using its address', () => {
       let tree = new Tree();
 
@@ -49,7 +51,7 @@ describe('Tree', () => {
     })
   })
 
-  describe('Method: suggest', () => {
+  describe('Method: suggest()', () => {
     it('should return an array of possible', () => {
 
       let tree = new Tree();
@@ -66,14 +68,22 @@ describe('Tree', () => {
     })
   })
 
-  describe('Dictionary population', () => {
+  describe('Method: populate()', () => {
     it('should have 235886 words counted', () => {
       let tree = new Tree();
 
       tree.populate()
 
       expect(tree.count).to.be.eq(235886)
+    })
 
+    it('should return a specific array from the dictionary', () => {
+      let tree = new Tree();
+
+      tree.populate()
+      let result = tree.suggest('piz')
+
+      expect(result).to.deep.eq(["pize", "pizza", "pizzeria", "pizzicato", "pizzle"])
     })
   })
 
