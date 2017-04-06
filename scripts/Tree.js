@@ -25,6 +25,7 @@ export default class Tree {
       node = node.children[letter];
     })
 
+//NOTE: this.count will incrament for repeat entries. Possible soln use findNode() to check if node is already word before assigning node .isWord
     node.isWord = true
     this.count++
   }
