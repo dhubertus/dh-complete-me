@@ -26,7 +26,7 @@ export default class Tree {
     })
 
     node.isWord = true
-    this.count ++;
+    this.count++
   }
 
 
@@ -78,7 +78,7 @@ export default class Tree {
 
     dictionary.forEach((word) => {
 
-      this.insert(word.toLowerCase(word))
+      this.insert(word.toLowerCase())
     })
   }
 

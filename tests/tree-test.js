@@ -27,7 +27,7 @@ describe('Class: Tree', () => {
       let tree = new Tree();
 
       tree.insert('polymer')
-
+      
       expect(tree.findNode('polymer').isWord).to.eq(true)
       expect(tree.count).to.eq(1)
     })
